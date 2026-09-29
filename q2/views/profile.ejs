@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Profile - Q2</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #f4f7f6; margin: 0; padding: 0; }
+    nav { background: #2c3e50; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; }
+    nav a.logout { background: #e74c3c; padding: 6px 15px; border-radius: 4px; }
+    .container { max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .profile-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .profile-table th, .profile-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    .profile-table th { background: #f8f9fa; width: 30%; color: #333; }
+    .badge { background: #8e44ad; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div style="font-weight: bold; font-size: 18px;">Q2: File Session App</div>
+    <div>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/profile">My Profile</a>
+      <a href="/logout" class="logout">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Protected Route 2: User Profile <span class="badge">Session Valid</span></h2>
+
+    <table class="profile-table">
+      <tr>
+        <th>Full Name</th>
+        <td><%= user.name %></td>
+      </tr>
+      <tr>
+        <th>Username</th>
+        <td><%= user.username %></td>
+      </tr>
+      <tr>
+        <th>Email Address</th>
+        <td><%= user.email %></td>
+      </tr>
+      <tr>
+        <th>Designation</th>
+        <td><%= user.role %></td>
+      </tr>
+      <tr>
+        <th>Session Storage Type</th>
+        <td><code>session-file-store</code> (File Based Persistence)</td>
+      </tr>
+    </table>
+
+    <div style="margin-top: 25px;">
+      <a href="/dashboard">&larr; Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

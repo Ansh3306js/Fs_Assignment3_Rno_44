@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Public API Utility Hub - Q6</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; }
+    body { background: #f0f2f5; color: #333; padding: 20px; }
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { color: #1a365d; margin-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+    .card h2 { color: #2b6cb0; font-size: 18px; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
+    .tag { font-size: 11px; padding: 3px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; }
+    .tag-backend { background: #ebf8ff; color: #2b6cb0; }
+    .tag-frontend { background: #f0fff4; color: #276749; }
+    .btn { background: #3182ce; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; }
+    .btn:hover { background: #2b6cb0; }
+    .form-control { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .result-box { background: #f7fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; font-size: 14px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      return (
+        <div>
+          <div className="header">
+            <h1>🌐 Free API Utility Dashboard (Q6)</h1>
+            <p style={{ color: '#4a5568' }}>Demonstrating API integration from both Backend (Express proxy) and Frontend (Client fetch)</p>
+          </div>
+
+          <div className="grid">
+            <WeatherUtility />
+            <CurrencyUtility />
+            <AdviceUtility />
+            <FrontendJokeUtility />
+          </div>
+        </div>
+      );
+    }
+
+    // 1. Weather Utility (Backend API Call to Open-Meteo)
+    function WeatherUtility() {
+      const [city, setCity] = useState('Delhi');
+      const [weather, setWeather] = useState(null);
+      const [loading, setLoading] = useState(false);
+
+      const cities = {
+        'Delhi': { lat: '28.6139', lon: '77.2090' },
+        'Mumbai': { lat: '19.0760', lon: '72.8777' },
+        'London': { lat: '51.5074', lon: '-0.1278' },
+        'New York': { lat: '40.7128', lon: '-74.0060' }
+      };
+
+      const fetchWeather = async () => {
+        setLoading(true);
+        const coords = cities[city];
+        try {
+          const res = await fetch(`/api/weather?lat=${coords.lat}&lon=${coords.lon}`);
+          const data = await res.json();
+          setWeather(data.data.current_weather);
+        } catch (err) {
+          console.error(err);
+        }
+        setLoading(false);
+      };
+
+      useEffect(() => { fetchWeather(); }, [city]);
+
+      return (
+        <div className="card">
+          <h2>
+            ☀️ Live Weather Utility
+            <span className="tag tag-backend">Backend API Call</span>
+          </h2>
+          <label style={{ display: 'block', fontSize: '13px', marginBottom: '5px' }}>Select City:</label>
+          <select className="form-control" value={city} onChange={(e) => setCity(e.target.value)}>
+            {Object.keys(cities).map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+
+          <div className="result-box">
+            {loading ? <p>Fetching weather via Express API...</p> : weather ? (
+              <div>
+                <p><strong>Temperature:</strong> {weather.temperature} °C</p>
+                <p><strong>Windspeed:</strong> {weather.windspeed} km/h</p>
+                <p><strong>Wind Direction:</strong> {weather.winddirection}°</p>
+                <p style={{ fontSize: '11px', color: '#718096', marginTop: '8px' }}>API: Open-Meteo (via Express Backend Proxy)</p>
+              </div>
+            ) : <p>No data</p>}
+          </div>
+        </div>
+      );
+    }
+
+    // 2. Currency Converter Utility (Backend API Call to ER-API)
+    function CurrencyUtility() {
+      const [amount, setAmount] = useState(100);
+      const [targetCurrency, setTargetCurrency] = useState('INR');
+      const [rates, setRates] = useState(null);
+
+      useEffect(() => {
+        fetch('/api/currency?base=USD')
+          .then(res => res.json())
+          .then(data => setRates(data.rates));
+      }, []);
+
+      const converted = rates && rates[targetCurrency] ? (amount * rates[targetCurrency]).toFixed(2) : 0;
+
+      return (
+        <div className="card">
+          <h2>
+            💱 Currency Converter (USD)
+            <span className="tag tag-backend">Backend API Call</span>
+          </h2>
+
+          <label style={{ display: 'block', fontSize: '13px', marginBottom: '5px' }}>Amount in USD ($):</label>
+          <input type="number" className="form-control" value={amount} onChange={(e) => setAmount(e.target.value)} />
+
+          <label style={{ display: 'block', fontSize: '13px', marginBottom: '5px' }}>Convert To:</label>
+          <select className="form-control" value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
+            <option value="INR">INR (Indian Rupee)</option>
+            <option value="EUR">EUR (Euro)</option>
+            <option value="GBP">GBP (British Pound)</option>
+            <option value="JPY">JPY (Japanese Yen)</option>
+            <option value="CAD">CAD (Canadian Dollar)</option>
+          </select>
+
+          <div className="result-box">
+            <p><strong>Converted Value:</strong></p>
+            <h3 style={{ color: '#2b6cb0', marginTop: '5px' }}>${amount} USD = {converted} {targetCurrency}</h3>
+            <p style={{ fontSize: '11px', color: '#718096', marginTop: '8px' }}>API: Open Exchange Rate API (via Express Proxy)</p>
+          </div>
+        </div>
+      );
+    }
+
+    // 3. Advice Slip Utility (Backend API Call)
+    function AdviceUtility() {
+      const [advice, setAdvice] = useState('');
+      const [loading, setLoading] = useState(false);
+
+      const fetchAdvice = async () => {
+        setLoading(true);
+        const res = await fetch('/api/advice');
+        const data = await res.json();
+        setAdvice(data.advice);
+        setLoading(false);
+      };
+
+      useEffect(() => { fetchAdvice(); }, []);
+
+      return (
+        <div className="card">
+          <h2>
+            💡 Advice Generator
+            <span className="tag tag-backend">Backend API Call</span>
+          </h2>
+          <p style={{ fontSize: '13px', color: '#4a5568', marginBottom: '15px' }}>Get daily wisdom & advice from public AdviceSlip API via backend</p>
+          <button className="btn" onClick={fetchAdvice} disabled={loading}>Get New Advice</button>
+
+          <div className="result-box">
+            {loading ? <p>Loading advice...</p> : <p style={{ fontStyle: 'italic', fontSize: '15px' }}>"{advice}"</p>}
+          </div>
+        </div>
+      );
+    }
+
+    // 4. Random Joke Utility (Direct Frontend API Call)
+    function FrontendJokeUtility() {
+      const [joke, setJoke] = useState(null);
+      const [loading, setLoading] = useState(false);
+
+      const fetchFrontendJoke = async () => {
+        setLoading(true);
+        try {
+          // Direct fetch call from React client to Official Joke API
+          const res = await fetch('https://official-joke-api.appspot.com/random_joke');
+          const data = await res.json();
+          setJoke(data);
+        } catch (err) {
+          setJoke({ setup: 'Why do programmers prefer dark mode?', punchline: 'Because light attracts bugs!' });
+        }
+        setLoading(false);
+      };
+
+      useEffect(() => { fetchFrontendJoke(); }, []);
+
+      return (
+        <div className="card">
+          <h2>
+            😄 Programmer Joke
+            <span className="tag tag-frontend">Direct Frontend Call</span>
+          </h2>
+          <p style={{ fontSize: '13px', color: '#4a5568', marginBottom: '15px' }}>Direct Client-side fetch() call from React Browser to Free API</p>
+          <button className="btn" style={{ background: '#38a169' }} onClick={fetchFrontendJoke} disabled={loading}>Fetch Another Joke</button>
+
+          <div className="result-box">
+            {loading ? <p>Fetching directly from frontend...</p> : joke ? (
+              <div>
+                <p><strong>Setup:</strong> {joke.setup}</p>
+                <p style={{ color: '#276749', marginTop: '8px' }}><strong>Punchline:</strong> {joke.punchline}</p>
+                <p style={{ fontSize: '11px', color: '#718096', marginTop: '8px' }}>API: Official Joke API (Direct Frontend Fetch)</p>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

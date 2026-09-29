@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Dashboard - Q2</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #f4f7f6; margin: 0; padding: 0; }
+    nav { background: #2c3e50; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; }
+    nav a.logout { background: #e74c3c; padding: 6px 15px; border-radius: 4px; }
+    .container { max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .badge { background: #27ae60; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+    .info-box { background: #e8f4f8; border-left: 4px solid #3498db; padding: 15px; margin: 20px 0; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div style="font-weight: bold; font-size: 18px;">Q2: File Session App</div>
+    <div>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/profile">My Profile</a>
+      <a href="/logout" class="logout">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Protected Route 1: Dashboard <span class="badge">Authenticated</span></h2>
+    <p>Welcome back, <strong><%= user.name %></strong>!</p>
+
+    <div class="info-box">
+      <h4>🔒 Session Information</h4>
+      <p>This session is stored on the server's local file system inside the <code>/sessions</code> directory using <code>session-file-store</code>.</p>
+    </div>
+
+    <h3>Dashboard Statistics</h3>
+    <ul>
+      <li>User Role: <%= user.role %></li>
+      <li>Session Status: Active (File Session Store)</li>
+      <li>Access Granted: 2 Protected Routes Available</li>
+    </ul>
+
+    <p><a href="/profile">Go to Protected Route 2: Profile Page &rarr;</a></p>
+  </div>
+</body>
+</html>

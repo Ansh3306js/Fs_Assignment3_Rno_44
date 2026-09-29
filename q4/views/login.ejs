@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - ERP System (Q4)</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .card { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 380px; }
+    h2 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
+    p.subtitle { text-align: center; color: #7f8c8d; margin-bottom: 25px; font-size: 14px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; color: #34495e; }
+    input[type="text"], input[type="password"] { width: 100%; padding: 11px; border: 1px solid #bdc3c7; border-radius: 5px; font-size: 14px; }
+    .btn { width: 100%; background: #2980b9; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+    .btn:hover { background: #3498db; }
+    .error { background: #e74c3c; color: white; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 15px; font-size: 14px; }
+    .demo-info { background: #ecf0f1; border-left: 4px solid #2980b9; padding: 10px; margin-top: 20px; font-size: 12px; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>ERP Admin Panel</h2>
+    <p class="subtitle">System Administrator Login</p>
+
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label>Admin Username</label>
+        <input type="text" name="username" required placeholder="Enter admin username">
+      </div>
+      <div class="form-group">
+        <label>Admin Password</label>
+        <input type="password" name="password" required placeholder="Enter password">
+      </div>
+      <button type="submit" class="btn">Login to ERP</button>
+    </form>
+
+    <div class="demo-info">
+      <strong>Demo Admin Credentials:</strong><br>
+      Username: <code>admin</code><br>
+      Password: <code>admin123</code>
+    </div>
+  </div>
+</body>
+</html>

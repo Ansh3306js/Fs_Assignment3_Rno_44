@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Reports - Q3 Redis</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #f4f7f6; margin: 0; padding: 0; }
+    nav { background: #c0392b; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; }
+    nav a.logout { background: #7f8c8d; padding: 6px 15px; border-radius: 4px; }
+    .container { max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .badge { background: #27ae60; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+    .report-card { background: #fafafa; border: 1px solid #eee; padding: 20px; margin-top: 20px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div style="font-weight: bold; font-size: 18px;">Q3: Redis Session Store App</div>
+    <div>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/reports">Reports & Analytics</a>
+      <a href="/logout" class="logout">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Protected Route 2: System Reports <span class="badge">Session Valid</span></h2>
+    <p>Logged in as: <strong><%= user.name %></strong> (<%= user.email %>)</p>
+
+    <div class="report-card">
+      <h4>📊 Performance & Redis Status Report</h4>
+      <p>Active Session Engine: <code><%= storeType %></code></p>
+      <p>TTL Expiry: 3600 Seconds (Auto Invalidation on Expiry or Logout)</p>
+      <p>Data Integrity: High Speed Key-Value Store</p>
+    </div>
+
+    <div style="margin-top: 25px;">
+      <a href="/dashboard">&larr; Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

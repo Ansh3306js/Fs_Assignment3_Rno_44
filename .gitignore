@@ -1,0 +1,6 @@
+node_modules/
+*.log
+database.sqlite
+sessions/
+q1/uploads/*
+!q1/uploads/.gitkeep

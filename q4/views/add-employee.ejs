@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Employee - ERP Admin (Q4)</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #f8f9fa; margin: 0; padding: 0; }
+    header { background: #2c3e50; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    .container { max-width: 650px; margin: 30px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; color: #444; }
+    input[type="text"], input[type="email"], input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+    .row { display: flex; gap: 15px; }
+    .col { flex: 1; }
+    .btn-submit { background: #27ae60; color: white; border: none; padding: 12px 20px; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; }
+    .btn-cancel { display: block; text-align: center; margin-top: 15px; color: #7f8c8d; text-decoration: none; }
+    .error { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+    .auto-info { background: #e8f4f8; padding: 10px; border-radius: 4px; font-size: 13px; color: #2980b9; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 style="margin: 0; font-size: 20px; color: white;">ERP Admin System</h1>
+    <a href="/admin/dashboard" style="color: white; text-decoration: none;">&larr; Back to Dashboard</a>
+  </header>
+
+  <div class="container">
+    <h2>Add New Employee</h2>
+
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <div class="auto-info">
+      ℹ️ <strong>Auto Operations:</strong> Employee ID & Password will be auto-generated. Password will be encrypted with bcrypt and an email notification will be triggered upon insertion. Net Salary is calculated automatically!
+    </div>
+
+    <form action="/admin/employee/add" method="POST">
+      <div class="row">
+        <div class="col form-group">
+          <label>Full Name</label>
+          <input type="text" name="name" required placeholder="e.g. Ramesh Kumar">
+        </div>
+        <div class="col form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" required placeholder="e.g. ramesh@company.com">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col form-group">
+          <label>Department</label>
+          <input type="text" name="department" required placeholder="e.g. Engineering">
+        </div>
+        <div class="col form-group">
+          <label>Designation</label>
+          <input type="text" name="designation" required placeholder="e.g. Software Engineer">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col form-group">
+          <label>Basic Pay (₹)</label>
+          <input type="number" name="basicPay" step="0.01" required placeholder="50000">
+        </div>
+        <div class="col form-group">
+          <label>Allowances (₹)</label>
+          <input type="number" name="allowances" step="0.01" value="0" placeholder="10000">
+        </div>
+        <div class="col form-group">
+          <label>Deductions (₹)</label>
+          <input type="number" name="deductions" step="0.01" value="0" placeholder="5000">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Register Employee & Send Email</button>
+      <a href="/admin/dashboard" class="btn-cancel">Cancel</a>
+    </form>
+  </div>
+</body>
+</html>
