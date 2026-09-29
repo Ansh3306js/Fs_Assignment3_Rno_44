@@ -43,10 +43,4 @@ Each server starts independently on its assigned port (3001 to 3008) and opens i
 
 ---
 
-## 📝 Git Submission
-This codebase has been initialized with Git and committed locally. To push to your remote GitHub repository, run:
-```bash
-git remote add origin <your-repo-url>
-git branch -M main
-git push -u origin main
-```
+
