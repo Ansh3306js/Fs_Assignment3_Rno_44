@@ -81,7 +81,7 @@
             </nav>
           </header>
 
-          <div class="container">
+          <div className="container">
             {activeTab === 'page1' && <ProfilePage token={token} />}
             {activeTab === 'page2' && <LeavePage token={token} />}
           </div>
@@ -229,7 +229,7 @@
 
       return (
         <div>
-          <!-- Add Leave Form -->
+          {/* Add Leave Form */}
           <div className="card">
             <h2>Page 2: Application for Leave (Add Leave)</h2>
             {msg && <div style={{ background: '#d1fae5', color: '#065f46', padding: '10px', borderRadius: '6px', marginBottom: '16px' }}>{msg}</div>}
@@ -259,7 +259,7 @@
             </form>
           </div>
 
-          <!-- List Leaves -->
+          {/* List Leaves */}
           <div className="card">
             <h2>Applied Leave History (List Leaves)</h2>
             {leaves.length === 0 ? (

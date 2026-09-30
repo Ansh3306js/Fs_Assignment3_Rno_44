@@ -139,7 +139,7 @@ app.delete('/api/students/:id', async (req, res) => {
 });
 
 // Serve React SPA Frontend
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

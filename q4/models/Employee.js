@@ -51,9 +51,8 @@ const employeeSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Pre-save hook to ensure salary calculation
-employeeSchema.pre('save', function(next) {
+employeeSchema.pre('save', function() {
   this.salary = (this.basicPay || 0) + (this.allowances || 0) - (this.deductions || 0);
-  next();
 });
 
 module.exports = mongoose.model('Employee', employeeSchema);

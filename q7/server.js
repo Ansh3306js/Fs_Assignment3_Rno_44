@@ -164,7 +164,7 @@ app.delete('/api/products/:id', async (req, res) => {
 });
 
 // Fallback to React app
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

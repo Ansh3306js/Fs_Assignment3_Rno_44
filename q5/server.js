@@ -149,7 +149,7 @@ app.post('/api/leaves', authenticateToken, async (req, res) => {
 });
 
 // Serve frontend for single page routing
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
